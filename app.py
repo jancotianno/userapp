@@ -48,6 +48,21 @@ def create_user():
     return jsonify({'userId': user_id, 'name': name})
 
 
+@app.route('/get-all-users', methods=['GET'])
+def get_all_users():
+    try:
+        # Scan the DynamoDB table to retrieve all items
+        response = dynamodb_client.scan(TableName=USERS_TABLE)
+        items = response.get('Items', [])
+
+        # Format the response to return only necessary user attributes
+        users = [{'userId': item.get('userId').get('S'), 'name': item.get('name').get('S')} for item in items]
+
+        return jsonify(users), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.errorhandler(404)
 def resource_not_found(e):
     return make_response(jsonify(error='Not found!'), 404)

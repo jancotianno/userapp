@@ -134,7 +134,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-6d542aed-2916",
-                "S3Key": "serverless/userapp/dev/1728132768903-2024-10-05T12:52:48.903Z/userapp.zip"
+                "S3Key": "serverless/userapp/dev/1728138056420-2024-10-05T14:20:56.420Z/userapp.zip"
               },
               "Handler": "wsgi_handler.handler",
               "Runtime": "python3.12",
@@ -157,14 +157,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionXS2lJOBqUKYaB3trXzV4qyRJExWPHXmkAlpUv64": {
+          "ApiLambdaVersiontYvli62SIbZzZO7Dpu68DTmc7CWYlhxMTWakFQRRss": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "1+c5oEQAsnylC/1/KOHv+TRLCOIfGYc39RoKfkCEWd4="
+              "CodeSha256": "H6pbXx6gvoUvvCJAGNt5at6J5gxPAqgRS3zghHEYadU="
             }
           },
           "ApiGatewayRestApi": {
@@ -289,7 +289,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1728132751916": {
+          "ApiGatewayDeployment1728138045503": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -372,7 +372,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionXS2lJOBqUKYaB3trXzV4qyRJExWPHXmkAlpUv64"
+              "Ref": "ApiLambdaVersiontYvli62SIbZzZO7Dpu68DTmc7CWYlhxMTWakFQRRss"
             },
             "Export": {
               "Name": "sls-userapp-dev-ApiLambdaFunctionQualifiedArn"
@@ -402,6 +402,12 @@
             },
             "Export": {
               "Name": "sls-userapp-dev-ServiceEndpoint"
+            }
+          },
+          "ApiEndpoint": {
+            "Description": "API Gateway endpoint URL",
+            "Value": {
+              "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
             }
           }
         }
@@ -443,10 +449,18 @@
         "timeout": 6,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionXS2lJOBqUKYaB3trXzV4qyRJExWPHXmkAlpUv64"
+        "versionLogicalId": "ApiLambdaVersiontYvli62SIbZzZO7Dpu68DTmc7CWYlhxMTWakFQRRss"
       }
     },
     "resources": {
+      "Outputs": {
+        "ApiEndpoint": {
+          "Description": "API Gateway endpoint URL",
+          "Value": {
+            "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+          }
+        }
+      },
       "Resources": {
         "UsersTable": {
           "Type": "AWS::DynamoDB::Table",
@@ -470,8 +484,7 @@
             "TableName": "users-table-dev"
           }
         }
-      },
-      "Outputs": {}
+      }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -510,7 +523,7 @@
     "artifact": "C:\\Users\\Betglad\\userapp\\.serverless\\userapp.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/userapp/dev/1728132768903-2024-10-05T12:52:48.903Z",
+    "artifactDirectoryName": "serverless/userapp/dev/1728138056420-2024-10-05T14:20:56.420Z",
     "artifact": "userapp.zip"
   }
 }

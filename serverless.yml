@@ -49,6 +49,10 @@ functions:
           method: ANY
 
 resources:
+  Outputs:
+    ApiEndpoint:
+      Description: "API Gateway endpoint URL"
+      Value: !Sub "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/${sls:stage}/"
   Resources:
     UsersTable:
       Type: AWS::DynamoDB::Table
