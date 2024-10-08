@@ -13,7 +13,6 @@ if os.environ.get('IS_OFFLINE'):
         'dynamodb', region_name='localhost', endpoint_url='http://localhost:8000'
     )
 
-
 USERS_TABLE = os.environ['USERS_TABLE']
 
 @app.route('/')
@@ -22,6 +21,7 @@ def index():
 
 @app.route('/getUserById/<string:user_id>')
 def get_user(user_id):
+    # Scan the DynamoDB table to retrieve item with given user_id
     result = dynamodb_client.get_item(
         TableName=USERS_TABLE, Key={'userId': {'S': user_id}}
     )
@@ -29,6 +29,7 @@ def get_user(user_id):
     if not item:
         return jsonify({'error': 'Could not find user with provided "userId"'}), 404
 
+    # Format the response to return user attributes
     return jsonify(
         {'userId': item.get('userId').get('S'), 'name': item.get('name').get('S')}
     )
@@ -41,10 +42,12 @@ def create_user():
     if not user_id or not name:
         return jsonify({'error': 'Please provide both "userId" and "name"'}), 400
 
+    # Create User Item in the DynamoDB table
     dynamodb_client.put_item(
         TableName=USERS_TABLE, Item={'userId': {'S': user_id}, 'name': {'S': name}}
     )
 
+    # Format the response to return user attributes
     return jsonify({'userId': user_id, 'name': name})
 
 
