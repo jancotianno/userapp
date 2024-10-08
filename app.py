@@ -20,7 +20,7 @@ USERS_TABLE = os.environ['USERS_TABLE']
 def index():
     return jsonify({"message": "Welcome to the user API!"})
 
-@app.route('/users/<string:user_id>')
+@app.route('/getUserById/<string:user_id>')
 def get_user(user_id):
     result = dynamodb_client.get_item(
         TableName=USERS_TABLE, Key={'userId': {'S': user_id}}
@@ -34,7 +34,7 @@ def get_user(user_id):
     )
 
 
-@app.route('/users', methods=['POST'])
+@app.route('/createUser', methods=['POST'])
 def create_user():
     user_id = request.json.get('userId')
     name = request.json.get('name')
